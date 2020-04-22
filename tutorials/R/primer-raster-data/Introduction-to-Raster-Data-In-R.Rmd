@@ -51,6 +51,11 @@ NEON-DS-Field-Site-Spatial-Data/SJER/.
 You should set your working directory to the parent directory of the downloaded 
 data to follow the code exactly. 
 
+```
+#Parent directory ("C:/Users/mccahill/Documents/GitHub/WFH_Git/NEON-Data-Skills/tutorials/R/primer-raster-data")
+
+```
+
 
 ## Recommended Reading
 * <a href="{{ site.baseurl }}/raster-res-extent-pixels-r" target="_blank"> The Relationship Between Raster Resolution, Spatial extent & Number of Pixels - in R</a>
@@ -86,13 +91,14 @@ Once installed we can load the packages and start working with raster data.
 ```{r load-libraries }
 
 # load the raster, sp, and rgdal packages
-library(raster)
+#load sp package before raster package
 library(sp)
+library(raster)
 library(rgdal)
 
 # set working directory to data folder
 #setwd("pathToDirHere")
-
+setwd("C:/Users/mccahill/Documents/GitHub/NEON-DS-Field-Site-Spatial-Data/SJER/DigitalTerrainModel/SJER2013_DTM.tif")
 ```	
 
 Next, let's load a raster containing elevation data into our environment. And
@@ -101,6 +107,27 @@ look at the attributes.
 ```{r load-raster}
 # load raster in an R object called 'DEM'
 DEM <- raster("NEON-DS-Field-Site-Spatial-Data/SJER/DigitalTerrainModel/SJER2013_DTM.tif")
+??RasterLayer
+
+
+##troubleshooting error message
+require(raster)
+
+# Create raster layer
+r = raster("C:/Users/mccahill/Documents/GitHub/NEON-DS-Field-Site-Spatial-Data/SJER/DigitalTerrainModel/SJER2013_DTM.tif")
+
+# Inspect raster layer
+class(r)
+
+#try manualing downloading?
+download.file("C:/Users/mccahill/Documents/GitHub/NEON-DS-Field-Site-Spatial-Data/SJER/DigitalTerrainModel/SJER2013_DTM.tif", mode="wb")
+
+#Check the validity of your raster with rgdal directly. Using the "GDALinfo" function you can do this without reading the raster into R.
+GDALinfo(system.file("external/test.ag", package="sp")[1])
+
+#When using Rmarkdown, if you set the working directory in one code chunk it will not carry over to the other code chunks. 
+
+sessionInfo()
 
 # look at the raster attributes. 
 DEM

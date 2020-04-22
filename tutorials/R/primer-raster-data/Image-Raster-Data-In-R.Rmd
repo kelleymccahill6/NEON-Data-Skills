@@ -115,9 +115,19 @@ First let's load the R packages that we need: `sp` and `raster`.
 library(raster)
 library(sp)
 library(rgdal)
-
 # set the working directory to the data
 #setwd("pathToDirHere")
+#works here:
+setwd("C:/Users/mccahill/Documents/GitHub/NEON-DS-Field-Site-Spatial-Data")
+getwd()
+#won't let me change directory
+#setwd("C:/Users/mccahill/Documents/GitHub/NEON-DS-Field-Site-Spatial-Data/SJER/DigitalTerrainModel")??
+
+#Tried moving spatial data to primer raster data folder...confused about dev aten branch
+
+wd <- "C:/Users/mccahill/Documents/GitHub/"
+
+
 ```
 
 Next, let's create a raster stack with bands representing 
@@ -131,9 +141,11 @@ This can be done by individually assigning each file path as an object.
 ```{r import-tiffs}
 
 # import tiffs
-band19 <- "NEON-DS-Field-Site-Spatial-Data/SJER/RGB/band19.tif"
-band34 <- "NEON-DS-Field-Site-Spatial-Data/SJER/RGB/band34.tif"
-band58 <- "NEON-DS-Field-Site-Spatial-Data/SJER/RGB/band58.tif"
+band19 <- paste0(wd, "NEON-DS-Field-Site-Spatial-Data/SJER/RGB/band19.tif")
+band34 <- paste0(wd, "NEON-DS-Field-Site-Spatial-Data/SJER/RGB/band34.tif")
+band58 <- paste0(wd, "NEON-DS-Field-Site-Spatial-Data/SJER/RGB/band58.tif")
+
+band19
 ```
 
 Note that if we wanted to create a stack from all the files in a directory (folder)
@@ -143,7 +155,10 @@ rasters.
 
 ``` {r list-files}
 # create list of files to make raster stack
-rasterlist1 <-  list.files('RGB', full.names=TRUE)
+getwd()
+rasterlist1 <-  list.files('C:/Users/mccahill/Documents/GitHub/NEON-DS-Field-Site-Spatial-Data/SJER/RGB', full.names=TRUE)
+rasterlist1
+#?list.files
 ```
 
 Or, if your directory is consistes of some .tif files and other file types you 
@@ -151,7 +166,8 @@ don't want in your stack, you can ask R to only list those files with a .tif
 extension.
 
 ```{r list-files-tif}
-rasterlist2 <-  list.files('RGB', full.names=TRUE, pattern="tif") 
+rasterlist2 <-  list.files('NEON-DS-Field-Site-Spatial-Data/SJER/RGB', full.names=TRUE, pattern="tif")
+rasterlist2
 ```
 
 Back to creating our raster stack with three bands.  We only want three of the 
@@ -161,6 +177,14 @@ from the bands we loaded individually. We do this with the `stack()` function.
 ``` {r r-stack}
 # create raster stack
 rgbRaster <- stack(band19,band34,band58)
+
+# require(raster)
+# 
+# # Create raster layer
+# r = raster("C:/path/to/your/image.tif")
+# 
+# # Inspect raster layer
+# class(r)
 
 # example syntax for stack from a list
 #rstack1 <- stack(rasterlist1)

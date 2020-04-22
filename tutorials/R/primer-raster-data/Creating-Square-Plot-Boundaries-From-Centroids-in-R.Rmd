@@ -83,11 +83,13 @@ library(rgdal)
 
 # set working directory to data folder
 #setwd("pathToDirHere")
+setwd("C:/Users/mccahill/Documents/GitHub/WFH_Git/NEON-Data-Skills/tutorials/R/primer-raster-data")
 
+getwd()
 
-# read in the NEON plot centroid data 
-# `stringsAsFactors=F` ensures character strings don't import as factors
-centroids <- read.csv("NEON-DS-Field-Site-Spatial-Data/SJER/PlotCentroids/SJERPlotCentroids.csv", stringsAsFactors=FALSE)
+#read in the NEON plot centroid data 
+#`stringsAsFactors=F` ensures character strings don't import as factors
+centroids <- read.csv("C:/Users/mccahill/Documents/GitHub/NEON-DS-Field-Site-Spatial-Data/SJER/PlotCentroids/SJERPlotCentroids.csv", stringsAsFactors=FALSE)
 ```
 
 Let's look at our data. This can be done several ways but one way is to view 
@@ -218,6 +220,7 @@ is far more efficient. However, the function hides a bit of what is going on so
 next we'll show how it is done without the function so you understand it.
 
 ``` {r mapply}
+library(sp)
 # create spatial polygons from coordinates
 polys <- SpatialPolygons(mapply(function(poly, id) 
 		{
@@ -310,9 +313,10 @@ to save our shapefile. If we want it in our current directory we can simply use 
 We can now export the spatial object as a shapefile.
 
 ``` {r write-ogr}
-
+library(rgdal)
 # write the shapefiles 
 writeOGR(polys.df, '.', '2014Plots_SJER', 'ESRI Shapefile')
+?writeOGR
 ```
 
 And there you have it -- a shapefile with a square plot boundary around your
